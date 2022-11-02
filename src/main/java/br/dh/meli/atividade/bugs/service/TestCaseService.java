@@ -52,8 +52,8 @@ public class TestCaseService {
         testCaseRepository.delete(testCase);
     }
 
-    public List<TestResponseDto> getByDate(LocalDate date) {
-        List<TestCase> testCaseList = testCaseRepository.findByLastUpdate(date);
+    public List<TestResponseDto> getByDate(String date) {
+        List<TestCase> testCaseList = testCaseRepository.findByLastUpdate(LocalDate.parse(date));
         return testCaseList.stream().map(TestResponseDto::new).collect(Collectors.toList()); // NEW: metodo chamado é o construtor
     }
 }

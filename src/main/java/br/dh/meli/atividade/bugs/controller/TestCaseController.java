@@ -21,7 +21,7 @@ public class TestCaseController {
     @Autowired
     private TestCaseService testCaseService;
 
-    @PostMapping("/new")
+   @PostMapping("/new")
     public ResponseEntity<Object> newCaseTest(@RequestBody TestRequestDto testRequestDto) {
         TestCase testCase = testCaseService.newCaseTest(testRequestDto);
         TestResponseDto responseDto = new TestResponseDto(testCase);
@@ -52,10 +52,10 @@ public class TestCaseController {
     public ResponseEntity<Object> updateTestCaseId(@RequestBody TestRequestDto testRequestDto){
         try {
             TestResponseDto testUpdate = testCaseService.updateTest(testRequestDto);
+            return new ResponseEntity<>(testUpdate,HttpStatus.OK);
         } catch (Exception e) {
-          return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -68,9 +68,9 @@ public class TestCaseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping()
-    public ResponseEntity<Object> testCasesDate(@RequestParam LocalDate date){
+    @GetMapping("/date")
+    public ResponseEntity<Object> testCasesDate(@RequestParam String date){
         List<TestResponseDto> testResponseDtoList = testCaseService.getByDate(date);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(testResponseDtoList,HttpStatus.OK);
     }
 }
